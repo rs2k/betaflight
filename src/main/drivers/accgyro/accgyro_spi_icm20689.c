@@ -127,8 +127,8 @@ void icm20689GyroInit(gyroDev_t *gyro)
 //    delay(100);
     gyro->mpuConfiguration.writeFn(&gyro->bus, MPU_RA_PWR_MGMT_1, INV_CLK_PLL);
     delay(15);
-    const uint8_t raGyroConfigData = gyro->gyroRateKHz > GYRO_RATE_8_kHz ? (INV_FSR_2000DPS << 3 | FCB_3600_32) : (INV_FSR_2000DPS << 3 | FCB_DISABLED);
-    gyro->mpuConfiguration.writeFn(&gyro->bus, MPU_RA_GYRO_CONFIG, raGyroConfigData);
+    const uint8_t raGyroConfigData = gyro->gyroRateKHz > GYRO_RATE_8_kHz ? (INV_FSR_2000DPS << 3 | FCB_8800_32) : (INV_FSR_2000DPS << 3 | FCB_DISABLED);
+    spiBusWriteRegister(&gyro->bus, MPU_RA_GYRO_CONFIG, raGyroConfigData);
     delay(15);
     gyro->mpuConfiguration.writeFn(&gyro->bus, MPU_RA_ACCEL_CONFIG, INV_FSR_16G << 3);
     delay(15);
