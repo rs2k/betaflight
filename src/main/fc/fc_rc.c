@@ -278,6 +278,7 @@ void updateRcCommands(void)
 {
     // PITCH & ROLL only dynamic PID adjustment,  depending on throttle value
     int32_t prop;
+    //set kp/pd separately if set
     if (rcData[THROTTLE] < currentControlRateProfile->tpa_breakpoint) {
         prop = 100;
         throttlePIDAttenuation = 1.0f;
