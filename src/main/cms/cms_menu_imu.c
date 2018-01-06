@@ -480,12 +480,75 @@ CMS_Menu cmsx_menuCopyProfile = {
 
 #endif
 
+static uint8_t gyroConfig_gyro_kalman_enable;
+static uint16_t gyroConfig_gyro_kalman_q;
+static uint16_t gyroConfig_gyro_kalman_r;
+static uint16_t gyroConfig_gyro_kalman_p;
+
+static long cmsx_kalmanOnEnter(void)
+{
+    gyroConfig_gyro_kalman_enable =  gyroConfig()->gyro_kalman_enable;
+    gyroConfig_gyro_kalman_q =  gyroConfig()->gyro_kalman_q;
+    gyroConfig_gyro_kalman_r = gyroConfig()->gyro_kalman_r;
+    gyroConfig_gyro_kalman_p = gyroConfig()->gyro_kalman_p;
+
+    return cmsx_RateProfileOnEnter();
+}
+
+static long cmsx_kalmanWriteback(const OSD_Entry *self)
+{
+    gyroConfigMutable()->gyro_kalman_enable =  gyroConfig_gyro_kalman_enable;
+    gyroConfigMutable()->gyro_kalman_q =  gyroConfig_gyro_kalman_q;
+    gyroConfigMutable()->gyro_kalman_r =  gyroConfig_gyro_kalman_r;
+    gyroConfigMutable()->gyro_kalman_p =  gyroConfig_gyro_kalman_p;
+
+    return cmsx_RateProfileWriteback(self);
+}
+
+static OSD_Entry cmsx_menuKalmanEntries[] =
+{
+    { "-- KALMAN --",    OME_Label,  NULL, rateProfileIndexString, 0},
+    { "ENABLED",         OME_Bool,   NULL, &gyroConfig_gyro_kalman_enable, 0 },
+
+    { "KALMAN Q",        OME_UINT16, NULL, &(OSD_UINT16_t) { &gyroConfig_gyro_kalman_q, 0, 16000, 10 }, 0 },
+    { "KALMAN R",        OME_UINT16, NULL, &(OSD_UINT16_t) { &gyroConfig_gyro_kalman_r, 0, 16000, 10 }, 0 },
+    { "KALMAN P",        OME_UINT16, NULL, &(OSD_UINT16_t) { &gyroConfig_gyro_kalman_p, 0, 16000, 10 }, 0 },
+
+    { "RF RATE ENABLED", OME_Bool,   NULL, &rateProfile.rfRatesEnabled, 0 },
+
+    { "RF RATE ROLL",    OME_UINT16, NULL, &(OSD_UINT16_t) { &rateProfile.rfRate[FD_ROLL], 200, 1500, 10 }, 0 },
+    { "RF ACRO ROLL",    OME_UINT8,  NULL, &(OSD_UINT8_t)  { &rateProfile.rfAcro[FD_ROLL], 0, 255, 1 }, 0 },
+    { "RF EXPO ROLL",    OME_UINT8,  NULL, &(OSD_UINT8_t)  { &rateProfile.rfExpo[FD_ROLL], 0, 100, 1 }, 0 },
+
+    { "RF RATE PITCH",   OME_UINT16, NULL, &(OSD_UINT16_t) { &rateProfile.rfRate[FD_PITCH], 200, 1500, 10 }, 0 },
+    { "RF ACRO PITCH",   OME_UINT8,  NULL, &(OSD_UINT8_t)  { &rateProfile.rfAcro[FD_PITCH], 0, 255, 1 }, 0 },
+    { "RF EXPO PITCH",   OME_UINT8,  NULL, &(OSD_UINT8_t)  { &rateProfile.rfExpo[FD_PITCH], 0, 100, 1 }, 0 },
+
+    { "RF RATE YAW",     OME_UINT16, NULL, &(OSD_UINT16_t) { &rateProfile.rfRate[FD_YAW], 200, 1500, 10 }, 0 },
+    { "RF ACRO YAW",     OME_UINT8,  NULL, &(OSD_UINT8_t)  { &rateProfile.rfAcro[FD_YAW], 0, 255, 1 }, 0 },
+    { "RF EXPO YAW",     OME_UINT8,  NULL, &(OSD_UINT8_t)  { &rateProfile.rfExpo[FD_YAW], 0, 100, 1 }, 0 },
+
+    {"BACK", OME_Back, NULL, NULL, 0},
+    { NULL, OME_END, NULL, NULL, 0 }
+};
+
+static CMS_Menu cmsx_menuKalman = {
+#ifdef CMS_MENU_DEBUG
+    .GUARD_text = "XKALMAN",
+    .GUARD_type = OME_MENU,
+#endif
+    .onEnter = cmsx_kalmanOnEnter,
+    .onExit = cmsx_kalmanWriteback,
+    .entries = cmsx_menuKalmanEntries
+};
+
 static OSD_Entry cmsx_menuImuEntries[] =
 {
     { "-- IMU --", OME_Label, NULL, NULL, 0},
 
     {"PID PROF",  OME_UINT8,   cmsx_profileIndexOnChange,     &(OSD_UINT8_t){ &tmpPidProfileIndex, 1, MAX_PROFILE_COUNT, 1},    0},
     {"PID",       OME_Submenu, cmsMenuChange,                 &cmsx_menuPid,                                                 0},
+    {"KALMAN",    OME_Submenu, cmsMenuChange,                 &cmsx_menuKalman,                                              0},
     {"MISC PP",   OME_Submenu, cmsMenuChange,                 &cmsx_menuProfileOther,                                        0},
     {"FILT PP",   OME_Submenu, cmsMenuChange,                 &cmsx_menuFilterPerProfile,                                    0},
 
