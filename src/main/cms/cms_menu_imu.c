@@ -510,21 +510,21 @@ static OSD_Entry cmsx_menuKalmanEntries[] =
     { "-- KALMAN --",    OME_Label,  NULL, rateProfileIndexString, 0},
     { "ENABLED",         OME_Bool,   NULL, &gyroConfig_gyro_kalman_enable, 0 },
 
-    { "KALMAN Q",        OME_UINT16, NULL, &(OSD_UINT16_t) { &gyroConfig_gyro_kalman_q, 0, 16000, 10 }, 0 },
-    { "KALMAN R",        OME_UINT16, NULL, &(OSD_UINT16_t) { &gyroConfig_gyro_kalman_r, 0, 16000, 10 }, 0 },
-    { "KALMAN P",        OME_UINT16, NULL, &(OSD_UINT16_t) { &gyroConfig_gyro_kalman_p, 0, 16000, 10 }, 0 },
+    { "KALMAN Q",        OME_UINT16, NULL, &(OSD_UINT16_t) { &gyroConfig_gyro_kalman_q, 0, 16000, 1 }, 0 },
+    { "KALMAN R",        OME_UINT16, NULL, &(OSD_UINT16_t) { &gyroConfig_gyro_kalman_r, 0, 16000, 1 }, 0 },
+    { "KALMAN P",        OME_UINT16, NULL, &(OSD_UINT16_t) { &gyroConfig_gyro_kalman_p, 0, 16000, 1 }, 0 },
 
     { "RF RATE ENABLED", OME_Bool,   NULL, &rateProfile.rfRatesEnabled, 0 },
 
-    { "RF RATE ROLL",    OME_UINT16, NULL, &(OSD_UINT16_t) { &rateProfile.rfRate[FD_ROLL], 200, 1500, 10 }, 0 },
+    { "RF RATE ROLL",    OME_UINT16, NULL, &(OSD_UINT16_t) { &rateProfile.rfRate[FD_ROLL], 200, 1500, 1 }, 0 },
     { "RF ACRO ROLL",    OME_UINT8,  NULL, &(OSD_UINT8_t)  { &rateProfile.rfAcro[FD_ROLL], 0, 255, 1 }, 0 },
     { "RF EXPO ROLL",    OME_UINT8,  NULL, &(OSD_UINT8_t)  { &rateProfile.rfExpo[FD_ROLL], 0, 100, 1 }, 0 },
 
-    { "RF RATE PITCH",   OME_UINT16, NULL, &(OSD_UINT16_t) { &rateProfile.rfRate[FD_PITCH], 200, 1500, 10 }, 0 },
+    { "RF RATE PITCH",   OME_UINT16, NULL, &(OSD_UINT16_t) { &rateProfile.rfRate[FD_PITCH], 200, 1500, 1 }, 0 },
     { "RF ACRO PITCH",   OME_UINT8,  NULL, &(OSD_UINT8_t)  { &rateProfile.rfAcro[FD_PITCH], 0, 255, 1 }, 0 },
     { "RF EXPO PITCH",   OME_UINT8,  NULL, &(OSD_UINT8_t)  { &rateProfile.rfExpo[FD_PITCH], 0, 100, 1 }, 0 },
 
-    { "RF RATE YAW",     OME_UINT16, NULL, &(OSD_UINT16_t) { &rateProfile.rfRate[FD_YAW], 200, 1500, 10 }, 0 },
+    { "RF RATE YAW",     OME_UINT16, NULL, &(OSD_UINT16_t) { &rateProfile.rfRate[FD_YAW], 200, 1500, 1 }, 0 },
     { "RF ACRO YAW",     OME_UINT8,  NULL, &(OSD_UINT8_t)  { &rateProfile.rfAcro[FD_YAW], 0, 255, 1 }, 0 },
     { "RF EXPO YAW",     OME_UINT8,  NULL, &(OSD_UINT8_t)  { &rateProfile.rfExpo[FD_YAW], 0, 100, 1 }, 0 },
 
