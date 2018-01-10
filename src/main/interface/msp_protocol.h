@@ -326,3 +326,7 @@
 #define MSP_SET_4WAY_IF          245    //in message          Sets 4way interface
 #define MSP_SET_RTC              246    //in message          Sets the RTC clock
 #define MSP_RTC                  247    //out message         Gets the RTC clock
+
+// additionnal kalman settings
+#define MSP_GYRO_FAST_KALMAN     225    //out message         Get kalman settings - betaflight
+#define MSP_SET_GYRO_FAST_KALMAN 226    //in message          Set kalman settings - betaflight
