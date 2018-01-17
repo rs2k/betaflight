@@ -504,7 +504,7 @@ void SystemInit(void)
 
 void SystemInitOC(void)
 {
-#if !defined(STM32F446xxx)
+//#if !defined(STM32F446xxx)
     // XXX Doesn't work for F446 with this configuration.
     // XXX Need to use smaller M to reduce N?
 
@@ -512,7 +512,7 @@ void SystemInitOC(void)
     pll_n = PLL_N_OC;
     pll_p = PLL_P_OC;
     pll_q = PLL_Q_OC;
-#endif
+//#endif
 
     SystemInit();
 }
